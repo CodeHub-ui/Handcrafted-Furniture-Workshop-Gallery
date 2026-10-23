@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Handcrafted Furniture Workshop Gallery</title>
+  <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <script type="module" src="js/app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <div class="app-shell">
+    <header class="sidebar">
+      <p class="brand">Handcrafted Furniture Workshop Gallery</p>
+      <div class="sidebar-bar">
+        <p class="connection" id="connection-status" role="status" data-state="online">
+          <span class="connection-dot" aria-hidden="true"></span>
+          <span id="connection-text">Online</span>
+        </p>
+        <button type="button" class="btn btn--small nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="primary-nav">Menu</button>
+      </div>
+      <nav class="primary-nav" id="primary-nav" aria-label="Primary">
+        <ul>
+          <li><a href="#/dashboard" data-route="dashboard">Dashboard</a></li>
+          <li><a href="#/gallery" data-route="gallery">Furniture gallery</a></li>
+          <li><a href="#/add" data-route="add">Add furniture</a></li>
+          <li><a href="#/manage" data-route="manage">Manage records</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <div class="content">
+      <main id="main" tabindex="-1">
+        <div id="startup-message" class="state-message" role="status">
+          <h1 class="state-title">Loading Handcrafted Furniture Workshop Gallery…</h1>
+          <p class="state-text">If this message does not go away, the app was probably opened as a file. Start a local server and open it from http://localhost instead (see README.md). JavaScript must be enabled.</p>
+        </div>
+        <noscript><p class="state-text">This application needs JavaScript to run.</p></noscript>
+
+        <div id="banner-region" class="banner-region"></div>
+
+        <section class="view" id="view-dashboard" aria-labelledby="dashboard-title" hidden>
+          <div class="view-header">
+            <div>
+              <h1 id="dashboard-title" tabindex="-1">Dashboard</h1>
+              <p class="view-lede">A live summary of every piece in the workshop.</p>
+            </div>
+          </div>
+          <ul class="stats" id="stats-list" aria-label="Summary statistics"></ul>
+          <div class="dashboard-grid">
+            <div class="panel">
+              <h2>Recently added</h2>
+              <ul class="recent-list" id="recent-list"></ul>
+            </div>
+            <div class="panel">
+              <h2>Items by category</h2>
+              <ul class="category-list" id="category-list"></ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="view" id="view-gallery" aria-labelledby="gallery-title" hidden>
+          <div class="view-header">
+            <div>
+              <h1 id="gallery-title" tabindex="-1">Furniture gallery</h1>
+              <p class="view-lede">Search, filter and open any piece.</p>
+            </div>
+            <a class="btn btn--primary" href="#/add">Add furniture</a>
+          </div>
+          <form class="toolbar panel" id="filter-form" role="search" aria-label="Search and filter furniture" novalidate>
+            <div class="field field--search">
+              <label for="search-input">Search furniture</label>
+              <div class="search-box">
+                <input id="search-input" type="search" name="search" maxlength="100" autocomplete="off" aria-describedby="search-help">
+                <button type="button" class="btn" id="clear-search" hidden>Clear search</button>
+              </div>
+              <p class="help" id="search-help">Name, ID, category, material or artisan.</p>
+            </div>
+            <div class="field">
+              <label for="filter-category">Category</label>
+              <select id="filter-category"></select>
+            </div>
+            <div class="field">
+              <label for="filter-status">Status</label>
+              <select id="filter-status"></select>
+            </div>
+            <div class="field">
+              <label for="filter-sort">Sort by</label>
+              <select id="filter-sort"></select>
+            </div>
+            <div class="toolbar-actions">
+              <button type="button" class="btn" id="reset-filters">Reset filters</button>
+            </div>
+          </form>
+          <p class="results-summary" id="results-summary" role="status"></p>
+          <div id="gallery-state"></div>
+          <ul class="card-grid" id="gallery-list"></ul>
+        </section>
+
+        <section class="view" id="view-add" aria-labelledby="form-title" hidden>
+          <div class="view-header">
+            <div>
+              <h1 id="form-title" tabindex="-1">Add furniture</h1>
+              <p class="view-lede" id="form-lede">Record a new piece. A unique ID is created automatically when you save.</p>
+            </div>
+          </div>
+          <form class="panel form" id="furniture-form" novalidate>
+            <div class="form-summary" id="form-error-summary" role="alert" hidden></div>
+            <p class="help">Fields marked <span class="required-mark" aria-hidden="true">*</span> are required.</p>
+
+            <div class="form-grid">
+              <div class="field">
+                <label for="field-name">Furniture name <span class="required-mark" aria-hidden="true">*</span></label>
+                <input id="field-name" name="name" type="text" required maxlength="80" autocomplete="off" aria-describedby="help-name">
+                <p class="help" id="help-name">2–80 characters, for example “Oak writing desk”.</p>
+                <p class="field-error" id="error-name" hidden></p>
+              </div>
+              <div class="field">
+                <label for="field-category">Category <span class="required-mark" aria-hidden="true">*</span></label>
+                <select id="field-category" name="category" required aria-describedby="help-category"></select>
+                <p class="help" id="help-category">Choose the closest match.</p>
+                <p class="field-error" id="error-category" hidden></p>
+              </div>
+              <div class="field">
+                <label for="field-material">Material <span class="required-mark" aria-hidden="true">*</span></label>
+                <input id="field-material" name="material" type="text" required maxlength="60" autocomplete="off" aria-describedby="help-material">
+                <p class="help" id="help-material">Main wood or material, for example “White oak”.</p>
+                <p class="field-error" id="error-material" hidden></p>
+              </div>
+              <div class="field">
+                <label for="field-artisan">Artisan name <span class="required-mark" aria-hidden="true">*</span></label>
+                <input id="field-artisan" name="artisan" type="text" required maxlength="60" autocomplete="off" aria-describedby="help-artisan">
+                <p class="help" id="help-artisan">The craftsperson responsible for the piece.</p>
+                <p class="field-error" id="error-artisan" hidden></p>
+              </div>
+            </div>
+
+            <fieldset class="field-group">
+              <legend>Dimensions (cm)</legend>
+              <p class="help" id="help-dimensions">Optional. Numbers only, such as 120 or 45.5. Maximum 1000.</p>
+              <div class="form-grid form-grid--three">
+                <div class="field">
+                  <label for="field-length">Length</label>
+                  <input id="field-length" name="length" type="text" inputmode="decimal" autocomplete="off" aria-describedby="help-dimensions">
+                  <p class="field-error" id="error-length" hidden></p>
+                </div>
+                <div class="field">
+                  <label for="field-width">Width</label>
+                  <input id="field-width" name="width" type="text" inputmode="decimal" autocomplete="off" aria-describedby="help-dimensions">
+                  <p class="field-error" id="error-width" hidden></p>
+                </div>
+                <div class="field">
+                  <label for="field-height">Height</label>
+                  <input id="field-height" name="height" type="text" inputmode="decimal" autocomplete="off" aria-describedby="help-dimensions">
+                  <p class="field-error" id="error-height" hidden></p>
+                </div>
+              </div>
+            </fieldset>
+
+            <div class="form-grid">
+              <div class="field">
+                <label for="field-price">Price</label>
+                <input id="field-price" name="price" type="text" inputmode="decimal" autocomplete="off" aria-describedby="help-price">
+                <p class="help" id="help-price">Optional. Numbers only, up to 2 decimals, such as 249.99.</p>
+                <p class="field-error" id="error-price" hidden></p>
+              </div>
+              <div class="field">
+                <label for="field-status">Production status <span class="required-mark" aria-hidden="true">*</span></label>
+                <select id="field-status" name="status" required aria-describedby="help-status"></select>
+                <p class="help" id="help-status">Where this piece is in the workshop.</p>
+                <p class="field-error" id="error-status" hidden></p>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="field-description">Description</label>
+              <textarea id="field-description" name="description" rows="4" maxlength="600" aria-describedby="help-description"></textarea>
+              <p class="help" id="help-description">Optional. Up to 600 characters.</p>
+              <p class="field-error" id="error-description" hidden></p>
+            </div>
+            <div class="field">
+              <label for="field-image">Image URL</label>
+              <input id="field-image" name="imageUrl" type="url" autocomplete="off" aria-describedby="help-image">
+              <p class="help" id="help-image">Optional. An https:// link, or a local path such as assets/images/placeholder.svg.</p>
+              <p class="field-error" id="error-imageUrl" hidden></p>
+            </div>
+
+            <div class="button-row">
+              <button type="submit" class="btn btn--primary" id="form-submit">Save furniture</button>
+              <a class="btn" href="#/gallery">Cancel</a>
+            </div>
+          </form>
+        </section>
+
+        <section class="view" id="view-manage" aria-labelledby="manage-title" hidden>
+          <div class="view-header">
+            <div>
+              <h1 id="manage-title" tabindex="-1">Manage records</h1>
+              <p class="view-lede">View, edit or delete records, and back up your data.</p>
+            </div>
+          </div>
+          <div class="panel">
+            <h2>Data tools</h2>
+            <p class="help">Records are stored only in this browser. Export a backup before resetting data or clearing browser storage.</p>
+            <div class="button-row">
+              <button type="button" class="btn" id="export-data">Export backup (JSON)</button>
+              <button type="button" class="btn" id="import-data">Import backup</button>
+              <button type="button" class="btn" id="restore-samples">Add missing sample records</button>
+              <button type="button" class="btn btn--danger-outline" id="reset-data">Reset to sample data</button>
+            </div>
+            <input type="file" id="import-file" accept="application/json,.json" hidden>
+            <div id="manage-status"></div>
+          </div>
+          <div id="manage-state"></div>
+          <div class="table-wrap" id="records-table-wrap" tabindex="0" role="region" aria-labelledby="records-caption">
+            <table class="data-table">
+              <caption id="records-caption">All furniture records</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Name and ID</th>
+                  <th scope="col">Category</th>
+                  <th scope="col">Artisan</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Price</th>
+                  <th scope="col">Updated</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="records-body"></tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+
+      <footer class="page-footer">
+        <p id="sw-status" role="status">Offline support: checking…</p>
+        <p>Records live in this browser only and are not synchronized between devices.</p>
+      </footer>
+    </div>
+  </div>
+
+  <div class="toast-stack">
+    <div id="toast-region" role="status" aria-live="polite"></div>
+    <div id="alert-region" role="alert"></div>
+  </div>
+
+  <dialog id="confirm-dialog" aria-labelledby="confirm-title" aria-describedby="confirm-message">
+    <form method="dialog">
+      <h2 id="confirm-title"></h2>
+      <p id="confirm-message"></p>
+      <div class="button-row">
+        <button type="submit" class="btn" value="cancel" autofocus>Cancel</button>
+        <button type="submit" class="btn btn--primary" id="confirm-accept" value="confirm">Confirm</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="details-dialog" aria-labelledby="details-title"></dialog>
+</body>
+</html>

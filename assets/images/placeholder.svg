@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" role="img" aria-label="Furniture placeholder">
+  <rect width="640" height="480" fill="#e8e8e8"/>
+  <g fill="none" stroke="#737373" stroke-width="10" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M250 120h140v120H250z"/>
+    <path d="M235 240h170v40H235z"/>
+    <path d="M250 280v95M390 280v95"/>
+  </g>
+</svg>

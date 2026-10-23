@@ -1,0 +1,33 @@
+const sample = (id, name, category, material, artisan, [length, width, height], price, status, dateAdded, description) => ({
+  id,
+  name,
+  category,
+  material,
+  artisan,
+  dimensions: { length, width, height },
+  price,
+  status,
+  description,
+  imageUrl: '',
+  dateAdded,
+  dateUpdated: dateAdded,
+});
+
+export const SAMPLE_FURNITURE = Object.freeze([
+  sample('FUR-0001', 'Shaker Dining Chair', 'Chairs', 'White oak', 'Marta Lindqvist', [45, 50, 90], 289, 'available', '2026-01-12T09:30:00.000Z',
+    'Steam-bent back slats and a hand-woven cord seat. Finished with hardwax oil.'),
+  sample('FUR-0002', 'Live-Edge Walnut Dining Table', 'Tables', 'Black walnut', 'Daniel Okafor', [220, 95, 76], 3450, 'in-production', '2026-02-03T14:10:00.000Z',
+    'Seats eight. Book-matched slab top on a hand-cut mortise-and-tenon base.'),
+  sample('FUR-0003', 'Hallway Console Cabinet', 'Storage', 'Ash with brass hardware', 'Priya Raman', [120, 35, 80], 1180, 'completed', '2026-02-21T11:00:00.000Z',
+    'Two soft-close doors and an adjustable internal shelf.'),
+  sample('FUR-0004', 'Platform Bed Frame (Queen)', 'Beds', 'Hard maple', 'Tomás Herrera', [215, 165, 35], 1890, 'in-production', '2026-03-09T08:45:00.000Z',
+    'Floating headboard, slatted base, and no metal fasteners visible.'),
+  sample('FUR-0005', 'Floating Wall Shelf Set', 'Shelving', 'Cherry', 'Marta Lindqvist', [90, 22, 4], 145, 'available', '2026-04-14T10:20:00.000Z',
+    'Set of three shelves with concealed steel brackets.'),
+  sample('FUR-0006', 'Turned Table Lamp Base', 'Decor', 'Walnut and brass', 'Hannah Weiss', [18, 18, 42], 96, 'completed', '2026-05-02T16:00:00.000Z',
+    'Lathe-turned base with a brass collar. Shade sold separately.'),
+  sample('FUR-0007', 'Oak Bar Stool', 'Chairs', 'Red oak', 'Daniel Okafor', [40, 40, 75], 210, 'available', '2026-06-18T13:25:00.000Z',
+    'Counter-height stool with a saddle-shaped seat and a footrest ring.'),
+  sample('FUR-0008', 'Library Bookcase', 'Shelving', 'Cherry', 'Priya Raman', [100, 32, 200], 2240, 'in-production', '2026-07-27T09:05:00.000Z',
+    'Floor-to-ceiling bookcase with five adjustable shelves and a face-frame front.'),
+]);
