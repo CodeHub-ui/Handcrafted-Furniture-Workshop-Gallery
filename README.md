@@ -53,9 +53,7 @@ handcrafted-furniture-gallery/
     ├── components/
     │   ├── dashboard.js  gallery.js  furniture-form.js  furniture-details.js
     │   └── notifications.js            Toasts, banners, confirm dialog, empty/loading/error states
-    └── offline/
-        ├── connection-status.js        online/offline events
-        └── service-worker-registration.js
+ 
 ```
 
 `utils/dom.js` and `utils/format.js` were added to the suggested structure to avoid duplicated code. The Manage records table is rendered by `gallery.js`.
