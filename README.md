@@ -141,51 +141,6 @@ If stored data is unreadable, the app shows a message, keeps a copy of the bad d
 
 **Security:** all user text is rendered with `textContent` or safe DOM methods (no `innerHTML`, no `eval`). Text is normalized and validated before it is saved, and image URLs are limited to `http(s)` and `assets/images/` paths. Client-side validation alone is not complete security. This is a demo with no login; do not treat it as production-secure or use it for confidential data.
 
-## Analytics simulation
-
-`js/utils/analytics.js` writes messages like `[Analytics] User interacted with Handcrafted Furniture Workshop Gallery` to the browser console (DevTools > Console) with an action name: `furniture_created`, `furniture_updated`, `furniture_deleted`, `furniture_searched`, `record_viewed`, `filter_changed`, plus `data_exported`, `data_imported`, `data_reset`. Nothing is sent anywhere and search text is never logged.
-
-## Troubleshooting
-
-| Problem | Fix |
-| --- | --- |
-| Stuck on "Loading…" | You opened the file directly. Use a local server. |
-| `python` not found | Try `py -m http.server 8000`, or use Live Server. |
-| "Offline support is not available" | Use `http://localhost` or HTTPS. |
-| Changes to code do not appear | The service worker is serving cached files. Hard refresh, or enable "Update on reload" in DevTools. |
-| Records vanished | Browser data was cleared or a different browser/profile or port is in use (storage is per origin). Import a backup. |
-| "Storage is full" | Export a backup and remove unneeded records or other site data. |
-
-## Known limitations
-
-No backend, no real authentication, no cross-device sync, records are per browser and per origin (a different port is a different dataset), images must be URLs or files in `assets/images/` (no uploads), and offline status is approximate.
-
-## Future roadmap
-
-Backend API with sync and user accounts, image upload, CSV export, print-friendly labels, pagination for very large datasets, automated unit tests.
-
-## Testing checklist
-
-Tick these when you verify them in your own browser:
-
-- [ ] App launches with no console errors
-- [ ] Sample records appear on first launch only
-- [ ] Add, edit (ID unchanged) and delete (with confirmation) work and update the dashboard
-- [ ] Search matches name, ID, category, material and artisan; "No data found" appears for no match
-- [ ] Filters and sorting work
-- [ ] Invalid input shows field messages and focuses the first invalid field
-- [ ] Refresh keeps records
-- [ ] Corrupt data (`localStorage.setItem('hfwg:v1:furniture','{')`) shows a banner and does not crash
-- [ ] Broken image URL shows "Image unavailable"
-- [ ] DevTools > Network > Offline shows the Offline indicator; reloading still works after the service worker is ready
-- [ ] Keyboard-only use works everywhere
-- [ ] Layout works at desktop, tablet and phone widths
-- [ ] Console shows analytics messages after actions
-
-### Automated checks run during development
-
-A scripted headless Chromium run (Playwright) against a local Python server exercised the scenarios above, including add/edit/delete, search, filters, sorting, validation, XSS payload rendering, persistence, corrupted and partially corrupted storage, simulated storage-quota failure, offline/online switching, service-worker offline reload, and overflow checks at 1280, 820 and 390 px widths. These scripts are not part of the project. Lighthouse, screen-reader and cross-browser testing were **not** performed.
-
 ## License
 
 No license selected yet. Replace this section, for example with the MIT License, before sharing the code.
